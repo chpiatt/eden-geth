@@ -45,8 +45,7 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: ${{ github.ref }}
+          tag_name: v${{ steps.prep.outputs.version }}
           draft: true
           files: |
             ./*.tar.gz
