@@ -21,6 +21,12 @@ jobs:
       - name: Check Out Repo 
         uses: actions/checkout@v2
       
+      - name: Prepare
+        id: prep
+        run: |
+          VERSION=${GITHUB_REF#refs/heads/release/v}
+          echo ::set-output name=version::${VERSION}
+      
       - name: Test
         run: go test ./core ./miner/... ./internal/ethapi/... ./les/...
 
@@ -32,7 +38,7 @@ jobs:
           mkdir -p release
           mv build/bin/geth ./release/geth
           mv COPYING ./release/COPYING
-          tar -zcvf eden-geth-linux-amd64-${GITHUB_REF#refs/tags/v}.tar.gz ./release/
+          tar -zcvf eden-geth-linux-amd64-${{ steps.prep.outputs.version }}.tar.gz ./release/
        
       # This will draft a new release & will attach the binaries produced by the above outputs.
       # You still need to publish this release though after job ends.
