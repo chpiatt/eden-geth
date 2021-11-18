@@ -32,7 +32,7 @@ jobs:
           mkdir -p release
           mv build/bin/geth ./release/geth
           mv COPYING ./release/COPYING
-          tar -czvf ./release/eden-geth-linux-amd64-${GITHUB_REF#refs/tags/v}.tar.gz ./release/
+          tar -zcvf eden-geth-linux-amd64-${GITHUB_REF#refs/tags/v}.tar.gz ./release/
        
       # This will draft a new release & will attach the binaries produced by the above outputs.
       # You still need to publish this release though after job ends.
@@ -43,6 +43,6 @@ jobs:
           release_name: ${{ github.ref }}
           draft: true
           files: |
-            ./release/*.tar.gz
+            ./*.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # You don't need to add this in secrets it's by default.
