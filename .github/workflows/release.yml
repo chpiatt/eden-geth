@@ -46,6 +46,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ steps.prep.outputs.version }}
+          target_commitish: ${GITHUB_SHA}
           draft: true
           files: |
             ./*.tar.gz
