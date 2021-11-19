@@ -38,7 +38,7 @@ jobs:
           mkdir -p release
           mv build/bin/geth ./release/geth
           mv COPYING ./release/COPYING
-          tar -zcvf eden-geth-linux-amd64-${{ steps.prep.outputs.version }}.tar.gz ./release/
+          tar -zcvf eden-geth-linux-amd64-${{ steps.prep.outputs.version }}-${GITHUB_SHA::8}.tar.gz ./release/
        
       # This will draft a new release & will attach the binaries produced by the above outputs.
       # You still need to publish this release though after job ends.
