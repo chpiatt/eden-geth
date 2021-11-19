@@ -26,8 +26,10 @@ jobs:
         run: |
           VERSION=${GITHUB_REF#refs/heads/release/v}
           COMMIT_HASH=${GITHUB_SHA}
+          COMMIT_SIG=${GITHUB_SHA::8}
           echo ::set-output name=version::${VERSION}
           echo ::set-output name=commit::${COMMIT_HASH}
+          echo ::set-output name=sig::${COMMIT_SIG}
       
       - name: Test
         run: go test ./core ./miner/... ./internal/ethapi/... ./les/...
@@ -40,7 +42,7 @@ jobs:
           mkdir -p release
           mv build/bin/geth ./release/geth
           mv COPYING ./release/COPYING
-          tar -zcvf eden-geth-linux-amd64-${{ steps.prep.outputs.version }}-${{ steps.prep.outputs.commit::8 }}.tar.gz ./release/
+          tar -zcvf eden-geth-linux-amd64-${{ steps.prep.outputs.version }}-${{ steps.prep.outputs.sig }}.tar.gz ./release/
        
       # This will draft a new release & will attach the binaries produced by the above outputs.
       # You still need to publish this release though after job ends.
