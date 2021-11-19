@@ -25,10 +25,8 @@ jobs:
         id: prep
         run: |
           VERSION=${GITHUB_REF#refs/heads/release/v}
-          COMMIT_HASH=${GITHUB_SHA}
           COMMIT_SIG=${GITHUB_SHA::8}
           echo ::set-output name=version::${VERSION}
-          echo ::set-output name=commit::${COMMIT_HASH}
           echo ::set-output name=sig::${COMMIT_SIG}
       
       - name: Test
@@ -50,7 +48,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ steps.prep.outputs.version }}
-          target_commitish: ${{ steps.prep.outputs.commit }}
           draft: true
           files: |
             ./*.tar.gz
